@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>plsStockMyScans</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+		<link rel="icon" href="{{ url_for('static', filename='images/icon.ico') }}">
+		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
+	</head>
+	<body class="is-preload">
+
+			<div id="wrapper">
+				
+				
+				{%- with messages = get_flashed_messages() %}
+					{% if messages %}
+						{% for message in messages %}
+							<script>
+							alert('{{ message }}');
+							</script>
+						{% endfor %}
+					{% endif %}
+				{% endwith -%}
+
+				<header id="header" class="alt">
+					<h1>plsStockMyScans</h1>
+					<p>dev by <a href="https://github.com/akira-trinity" target="_blank">akira</a></p>
+				</header>
+
+					<nav id="nav">
+						<ul>
+							<li><a href="#search" class="active">Search</a></li>
+							<li><a href="#gestion">Management</a></li>
+							<li><a href="#data">Stock</a></li>
+						</ul>
+					</nav>
+
+					<div id="main">
+
+							<section id="search" class="main special">
+								<header class="major">
+									<h2>Search</h2>
+								</header>
+								
+								<ul>
+								
+									<form action="/backend/search" method='POST'>
+										<input type="text" name="keywords" placeholder="Search with a title, status or a grade...">
+										</br>
+										<input type="image" src="/static/images/search.png" width="70" height="70">
+									</form>
+									
+								</ul>
+								
+								{% if headers %}
+								<table>
+									<thead>
+									  <tr>
+									  {% for header in headers %}
+										<th>{{header}}</th>
+									  {% endfor %}
+									  </tr>
+									</thead>
+
+									<tbody>
+									{% for object in itemsearch %} 
+									  <tr>
+										{% for k, val in object.items() %}
+											<td align="left">{{val}}</td>
+										{% endfor %}
+									  </tr>
+									{% endfor %}        
+									</tbody>
+								</table>
+								{% endif %}
+
+							</section>
+
+							<section id="gestion" class="main special">
+								<header class="major">
+									<h2>Management</h2>
+								</header>
+								
+								<ul class="features">
+									<li>
+										<form action="/backend/addData" method="post">
+											<input type="text" name="title" placeholder="Title" required>
+											</br>
+											<input type="text" name="status" placeholder="Status" required>
+											</br>
+											<input type="text" name="grade" placeholder="Grade /10" required>
+											</br>
+											<input type="submit" value="Add">
+										</form>
+										
+									</li>
+									<li>
+										<form action="/backend/deleteData" method="post" onSubmit="return confirm('Are you sure about delete this data ?');">
+											<input type="text" name="title" placeholder="Title" required>
+											</br>
+											<input type="submit" value="Remove">
+										</form>
+										
+									</li>
+									
+								</ul>
+								</br>
+								<ul class="features">
+									<li>
+										<form action="/backend/updateData" method="post" onSubmit="return confirm('Are you sure about modify this data ?');">
+											<input type="text" name="ancienttitle" placeholder="Current title" required>
+											</br>
+											<input type="text" name="ancientstatus" placeholder="Current status" required>
+											</br>
+											<input type="text" name="ancientgrade" placeholder="Current grade" required>
+											</br>
+									</li>
+									<li>
+
+											<input type="text" name="newtitle" placeholder="New title" required>
+											</br>
+											<input type="text" name="newstatus" placeholder="New status" required>
+											</br>
+											<input type="text" name="newgrade" placeholder="New grade" required>
+											</br>
+										
+									</li>
+								</ul>
+								
+								<input type="submit" value="Modify">
+								
+								</form>
+								
+								</br>
+								</br>
+								</br>
+
+								<form action="/backend/changeWallpp" method='POST' enctype="multipart/form-data">
+									<input type=file name='file' accept="image/png" required>
+									<input type="submit" value="Change wallpaper (.png only)">
+								</form>
+								
+								<form action="/backend/resetdb" method='POST' onSubmit="return confirm('Are you sure about reset database ?');">
+									<input type="submit" value="Reset database">
+								</form>
+								
+							</section>
+
+							<section id="data" class="main special">
+								<header class="major">
+									<h2>Stock : </h2>
+								</header>
+								
+								{% if objects %}
+								<table>
+									<thead>
+									  <tr>
+									  {% for header in headers %}
+										<th>{{header}}</th>
+									  {% endfor %}
+									  </tr>
+									</thead>
+
+									<tbody>
+									{% for object in objects %} 
+									  <tr>
+									{% for k, val in object.items() %}
+										<td align="left">{{val}}</td>
+									  {% endfor %}
+									  </tr>
+									{% endfor %}        
+									</tbody>
+								</table>
+								{% endif %}
+
+								
+							</section>
+					</div>
+			</div>
+
+			<script src="/static/assets/js/jquery.min.js"></script>
+			<script src="/static/assets/js/jquery.scrollex.min.js"></script>
+			<script src="/static/assets/js/jquery.scrolly.min.js"></script>
+			<script src="/static/assets/js/browser.min.js"></script>
+			<script src="/static/assets/js/breakpoints.min.js"></script>
+			<script src="/static/assets/js/util.js"></script>
+			<script src="/static/assets/js/main.js"></script>
+
+	</body>
+</html>
