@@ -31,4 +31,6 @@ pip install flask
 
 <p align="center">Open an issue if you have an error !</p>
 
+# Notes
 
+Wallpaper feature is not working for the moment, I'll do an update to change it one day.
