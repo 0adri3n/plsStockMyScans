@@ -33,4 +33,4 @@ pip install flask
 
 # Notes
 
-Wallpaper feature is not working for the moment, I'll do an update to change it one day.
+Wallpaper feature is not working in .exe version for the moment, I'll do an update to change it one day.
